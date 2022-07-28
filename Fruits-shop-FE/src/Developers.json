@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Marco Colia",
+    "age": 37,
+    "location": "Bari",
+    "image": "https://avatars.githubusercontent.com/u/79002016?v=4",
+    "link": "https://www.linkedin.com/in/marco-colia-a1a35915a/"
+  },
+  {
+    "name": "Amelia Tedeschi",
+    "age": 39,
+    "location": "Avellino",
+    "image": "https://avatars.githubusercontent.com/u/93825019?s=96&v=4",
+    "link": "https://www.linkedin.com/in/amelia-tedeschi-6ab725239/"
+  },
+  {
+    "name": "Simone D'Ambrosio",
+    "age": 28,
+    "location": "Napoli",
+    "image": "https://media-exp1.licdn.com/dms/image/C4D03AQHxF7TlCepJ5g/profile-displayphoto-shrink_800_800/0/1652635193920?e=1658966400&v=beta&t=vTkjDHCTKITA2z82S3uvrLp-kphNtFZzEWHrm0CjeGc",
+    "link": "https://www.linkedin.com/in/simone-d-ambrosio-405980200/"
+  },
+  {
+    "name": "Enrico De Maria",
+    "age": 35,
+    "location": "Napoli",
+    "image": "https://avatars.githubusercontent.com/u/95548403?v=4",
+    "link": "https://www.linkedin.com/in/enrico-de-maria/"
+  }
+]
