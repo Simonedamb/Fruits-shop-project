@@ -1,4 +1,4 @@
-import addFormats from "ajv-formats";
+// import addFormats from "ajv-formats";
 import { Validator, ValidationError } from "express-json-validator-middleware";
 import { ErrorRequestHandler } from "express";
 
@@ -6,9 +6,9 @@ const validator = new Validator({
     coerceTypes: true,
 });
 
-addFormats(validator.ajv, ["date-time"])
-    .addKeyword("kind")
-    .addKeyword("modifier");
+// addFormats(validator.ajv, ["date-time"])
+//     .addKeyword("kind")
+//     .addKeyword("modifier");
 
 export const validate = validator.validate;
 

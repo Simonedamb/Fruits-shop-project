@@ -23,13 +23,21 @@ model Fruits {
     updatedAt               DateTime      @updatedAt
     updatedBy               String?       @db.VarChar(255)
 
+
+    nutrition   Nutrition[] @relation("FruitsHasNutrition")
 }
 
+
+
 model Nutrition {
-    Fruits_id                Int           @id @default(autoincrement())
+    id                Int           @id @default(autoincrement())
     carbohydrates            Decimal       @db.Decimal(5,2)
     protein                  Decimal       @db.Decimal(5,2)
     fath                     Decimal       @db.Decimal(5,2)
     calories                 Decimal       @db.Decimal(5,2)
     sugar                    Decimal       @db.Decimal(5,2)
+
+
+    fruits   Fruits @relation("FruitsHasNutrition", fields: [fruitsId], references: [id])
+    fruitsId    Int
 }

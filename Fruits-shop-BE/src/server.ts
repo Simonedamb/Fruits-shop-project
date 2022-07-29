@@ -1,23 +1,11 @@
 import express from "express";
 import "express-async-errors";
-import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
-import {
-    validate,
-    ValidationErrorMiddleware,
-    fruitSchema,
-    FruitData,
-} from "./lib/validation";
-
-import { initMulterMiddleware } from "./lib/middleware/multer";
+import { ValidationErrorMiddleware } from "./lib/validation";
 
 import generalRouter from "./routes/index";
 
-const upload = initMulterMiddleware();
-
 import cors from "cors";
-
-const prisma = new PrismaClient();
 
 const corsOptions = {
     origin: "http://localhost:8080",

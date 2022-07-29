@@ -2,14 +2,7 @@ import express from "express";
 import "express-async-errors";
 import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
-import {
-    validate,
-    ValidationErrorMiddleware,
-    fruitSchema,
-    FruitData,
-} from "../lib/validation";
-
-import { initMulterMiddleware } from "../lib/middleware/multer";
+import { validate, fruitSchema, FruitData } from "../lib/validation";
 
 const router = express.Router();
 
@@ -39,12 +32,7 @@ router.get("/fruits/:id(\\d+)", async (req, res, next) => {
 router.post("/fruits", validate({ body: fruitSchema }), async (req, res) => {
     const fruitData: FruitData = req.body;
 
-    const fruit = await prisma.fruits.create({
-        //@ts-ignore
-        data: fruitData,
-    });
-
-    res.status(201).json(fruit);
+    res.status(200).json(fruitData);
 });
 
 router.put(
@@ -63,6 +51,44 @@ router.put(
             response.status(404);
             next(`Cannot PUT /fruits/${fruitId}`);
         }
+    }
+);
+
+router.patch(
+    "/fruits/:id",
+    validate({ body: fruitSchema }),
+    async (req, res) => {
+        const fruitData: FruitData = req.body;
+
+        const fruitFound = await prisma.fruits.findUnique({
+            where: { id: +req.params.id },
+        });
+
+        if (!fruitFound)
+            return res.status(500).send({ message: "some error has occurred" });
+
+        const { nutrition, ...fruits } = fruitData;
+
+        const objToUpdate = {
+            ...fruits,
+            ...(nutrition && {
+                fruits: {
+                    update: nutrition.map((index) => {
+                        const { ...nutrition } = index;
+                        return {
+                            where: {},
+                            data: { ...nutrition },
+                        };
+                    }),
+                },
+            }),
+        };
+
+        const fruitUpdate = await prisma.fruits.update({
+            where: { id: fruitFound.id },
+            data: objToUpdate,
+        });
+        res.status(201).json(fruitUpdate);
     }
 );
 
