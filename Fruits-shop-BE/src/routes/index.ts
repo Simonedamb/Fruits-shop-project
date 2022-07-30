@@ -2,23 +2,38 @@ import express from "express";
 import "express-async-errors";
 import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
-import { validate, fruitSchema, FruitData } from "../lib/validation";
+import {
+    validate,
+    fruitSchema,
+    FruitData,
+    FruitDataUpdate,
+    fruitSchemaUpdate,
+    fruitResponse,
+} from "../lib/validation";
 
 const router = express.Router();
 
 const prisma = new PrismaClient();
 
 router.get("/fruits", async (req, res) => {
-    const fruits = await prisma.fruits.findMany();
+    const fruits = await prisma.fruits.findMany({
+        include: {
+            nutrition: true,
+        },
+    });
 
     res.json(fruits);
 });
 
 router.get("/fruits/:id(\\d+)", async (req, res, next) => {
+    //@ts-ignore
     const fruitId = Number(req.params.id);
 
     const fruit = await prisma.fruits.findUnique({
         where: { id: fruitId },
+        include: {
+            nutrition: true,
+        },
     });
 
     if (!fruit) {
@@ -29,11 +44,40 @@ router.get("/fruits/:id(\\d+)", async (req, res, next) => {
     res.json(fruit);
 });
 
-router.post("/fruits", validate({ body: fruitSchema }), async (req, res) => {
-    const fruitData: FruitData = req.body;
+router.post(
+    "/fruits",
+    validate({ body: fruitSchema }),
+    async (req, res, err) => {
+        const fruitData: FruitData = req.body;
+        if (res.status(400)) {
+            console.log(err);
+        }
 
-    res.status(200).json(fruitData);
-});
+        const { nutrition, ...fruits } = fruitData;
+
+        const objToSave = {
+            ...fruits,
+            ...(nutrition && {
+                nutrition: {
+                    create: nutrition.map((nutrition) => {
+                        return {
+                            carbohydrates: nutrition.carbohydrates,
+                            protein: nutrition.protein,
+                            fath: nutrition.fath,
+                            calories: nutrition.calories,
+                            sugar: nutrition.sugar,
+                        };
+                    }),
+                },
+            }),
+        };
+        //@ts-ignore
+        const newFruit: fruitResponse = await prisma.fruits.create({
+            data: objToSave,
+        });
+        res.status(201).json(newFruit);
+    }
+);
 
 router.put(
     "/fruits/:id(\\d+)",
@@ -56,37 +100,43 @@ router.put(
 
 router.patch(
     "/fruits/:id",
-    validate({ body: fruitSchema }),
+    validate({ body: fruitSchemaUpdate }),
     async (req, res) => {
-        const fruitData: FruitData = req.body;
-
+        const fruitData: FruitDataUpdate = req.body;
         const fruitFound = await prisma.fruits.findUnique({
             where: { id: +req.params.id },
         });
 
-        if (!fruitFound)
-            return res.status(500).send({ message: "some error has occurred" });
+        if (!fruitFound) {
+            res.status(500);
+        }
 
         const { nutrition, ...fruits } = fruitData;
 
-        const objToUpdate = {
+        const objToSave = {
             ...fruits,
             ...(nutrition && {
-                fruits: {
-                    update: nutrition.map((index) => {
-                        const { ...nutrition } = index;
+                nutrition: {
+                    update: nutrition.map((nutritio) => {
+                        const { id } = nutritio;
                         return {
-                            where: {},
-                            data: { ...nutrition },
+                            where: { id },
+                            data: {
+                                carbohydrates: nutritio.carbohydrates,
+                                protein: nutritio.protein,
+                                fath: nutritio.fath,
+                                calories: nutritio.calories,
+                                sugar: nutritio.sugar,
+                            },
                         };
                     }),
                 },
             }),
         };
-
-        const fruitUpdate = await prisma.fruits.update({
-            where: { id: fruitFound.id },
-            data: objToUpdate,
+        //@ts-ignore
+        const fruitUpdate: fruitResponse = await prisma.fruits.update({
+            where: { id: fruitFound?.id },
+            data: objToSave,
         });
         res.status(201).json(fruitUpdate);
     }
@@ -102,6 +152,7 @@ router.delete("/fruits/:id(\\d+)", async (request, response, next) => {
     } catch (error) {
         response.status(404);
         next(`Cannot DELETE /fruits/${fruitId}`);
+        console.log(error);
     }
 });
 

@@ -19,9 +19,9 @@ app.use(express.json());
 
 app.use(cors(corsOptions));
 
-app.use(ValidationErrorMiddleware);
-
 app.use(generalRouter);
+
+app.use(ValidationErrorMiddleware);
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

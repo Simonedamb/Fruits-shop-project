@@ -24,6 +24,13 @@ export const ValidationErrorMiddleware: ErrorRequestHandler = (
         });
 
         next();
+    }
+    if (error instanceof ValidationError) {
+        res.status(500).send({
+            errors: error.validationErrors,
+        });
+
+        next();
     } else {
         next(error);
     }
