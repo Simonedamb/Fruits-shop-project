@@ -1,6 +1,5 @@
 import { Static, Type } from "@sinclair/typebox";
-import e from "express";
-import { type } from "node:os";
+
 
 export const nutritionSchema = Type.Object(
     {
@@ -81,4 +80,6 @@ export type fruitResponse={
 
 export type FruitData = Static<typeof fruitSchema>;
 export type FruitDataUpdate = Static<typeof fruitSchemaUpdate>;
+export type DetailsDataUpdate = Static<typeof nutritionSchemaUpdate>;
+
 

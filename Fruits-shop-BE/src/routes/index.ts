@@ -9,6 +9,8 @@ import {
     FruitDataUpdate,
     fruitSchemaUpdate,
     fruitResponse,
+    nutritionSchema,
+    nutritionSchemaUpdate,
 } from "../lib/validation";
 
 const router = express.Router();
@@ -81,14 +83,22 @@ router.post(
 
 router.put(
     "/fruits/:id(\\d+)",
-    validate({ body: fruitSchema }),
+    validate({ body: fruitSchemaUpdate }),
     async (request, response, next) => {
         const fruitId = Number(request.params.id);
-        const FruitData: FruitData = request.body;
+        const {  ...nutrition } = nutritionSchemaUpdate;
+        const nutritionId=nutrition.id
+
         try {
             const fruit = await prisma.fruits.update({
-                where: { id: fruitId },
-                data: FruitData,
+                where:{id:fruitId},
+                data:{
+                    nutrition:{
+                        createMany:{
+                            data:[]
+                        }
+                    }
+                }
             });
             response.status(200).json(fruit);
         } catch (error) {
@@ -145,7 +155,7 @@ router.patch(
 router.delete("/fruits/:id(\\d+)", async (request, response, next) => {
     const fruitId = Number(request.params.id);
     try {
-        await prisma.fruits.delete({
+        await prisma.fruits.deleteMany({
             where: { id: fruitId },
         });
         response.status(204).end();
