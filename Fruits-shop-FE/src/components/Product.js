@@ -16,7 +16,6 @@ import {
 
 const Product = () => {
   const allFruits = useSelector(allProducts);
-  console.log(allFruits);
   const statusFruits = useSelector(productStatus);
   const errorFruits = useSelector(errorProduct);
   const loadingFruits = useSelector(loadingProduct);

@@ -17,7 +17,7 @@ const cartSlice = createSlice({
         state.totalPrice = Number(
           state.fruits
             .map((price) => {
-              console.log(parseFloat(price.price));
+              // console.log(parseFloat(price.price));
               const result = parseFloat(price.price.replace(/,/g, ".")).toFixed(
                 2
               );
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
       state.totalPrice = Number(
         state.fruits
           .map((price) => {
-            console.log(parseFloat(price.price));
+            // console.log(parseFloat(price.price));
             const result = parseFloat(price.price.replace(/,/g, ".")).toFixed(
               2
             );

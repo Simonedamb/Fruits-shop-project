@@ -64,16 +64,10 @@ const PopUpFruits = ({ fruit, state }) => {
           </div>
         </div>
       )}
-      {modifyUp && (
-        <ModifyUp
-          name={fruit.name}
-          image={fruit.image}
-          price={fruit.price}
-          family={fruit.family}
-          handleClose={handleClosePopUp}
-        />
+      {modifyUp && <ModifyUp fruit={fruit} handleClose={handleClosePopUp} />}
+      {deleteFruit && (
+        <DeleteFruit fruit={fruit} handleClose={handleClosePopUp} />
       )}
-      {deleteFruit && <DeleteFruit handleClose={handleClosePopUp} />}
     </div>
   );
 };

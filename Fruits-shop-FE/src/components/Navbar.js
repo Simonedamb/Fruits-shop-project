@@ -16,7 +16,7 @@ const Navbar = () => {
   const { amount } = useSelector((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
   const myUser = useSelector((state) => state.user.users);
-  console.log(myUser);
+  // console.log(myUser);
 
   const handleOpenCart = () => {
     setShowCart(!showCart);

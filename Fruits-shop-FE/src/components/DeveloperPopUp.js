@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 const DeveloperPopUp = ({ dev, state }) => {
-  console.log(dev, state);
+  // console.log(dev, state);
   useEffect(() => {
     state(true);
   }, [state, dev]);

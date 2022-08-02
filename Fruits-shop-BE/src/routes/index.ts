@@ -115,7 +115,7 @@ router.delete("/fruits/:id(\\d+)", async (request, response, next) => {
         const nutritionsData = await prisma.nutrition.findMany({
             where: { fruitsId: fruitId },
         });
-        console.log(nutritionsData);
+        // console.log(nutritionsData);
         await prisma.nutrition.deleteMany({
             where: { id: nutritionsData[0].id, fruitsId: fruitId },
         });

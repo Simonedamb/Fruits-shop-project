@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const SignUp = ({ login }) => {
   const array = useSelector((state) => state.user.users);
-  console.log(array);
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
