@@ -2,16 +2,14 @@ import express from "express";
 import "express-async-errors";
 import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
+import { validate } from "../lib/validation";
 import {
-    validate,
-    fruitSchema,
     FruitData,
     FruitDataUpdate,
-    fruitSchemaUpdate,
     fruitResponse,
-    nutritionSchema,
-    nutritionSchemaUpdate,
-} from "../lib/validation";
+    fruitSchema,
+    fruitSchemaUpdate,
+} from "../lib/validation/fruit";
 
 const router = express.Router();
 
@@ -61,19 +59,12 @@ router.post(
             ...fruits,
             ...(nutrition && {
                 nutrition: {
-                    create: nutrition.map((nutrition) => {
-                        return {
-                            carbohydrates: nutrition.carbohydrates,
-                            protein: nutrition.protein,
-                            fath: nutrition.fath,
-                            calories: nutrition.calories,
-                            sugar: nutrition.sugar,
-                        };
-                    }),
+                    create: nutrition,
                 },
             }),
         };
-        //@ts-ignore
+        console.log(objToSave);
+        // @ts-ignore
         const newFruit: fruitResponse = await prisma.fruits.create({
             data: objToSave,
         });
@@ -81,36 +72,11 @@ router.post(
     }
 );
 
-router.put(
-    "/fruits/:id(\\d+)",
-    validate({ body: fruitSchemaUpdate }),
-    async (request, response, next) => {
-        const fruitId = Number(request.params.id);
-        const {  ...nutrition } = nutritionSchemaUpdate;
-        const nutritionId=nutrition.id
-
-        try {
-            const fruit = await prisma.fruits.update({
-                where:{id:fruitId},
-                data:{
-                    nutrition:{
-                        createMany:{
-                            data:[]
-                        }
-                    }
-                }
-            });
-            response.status(200).json(fruit);
-        } catch (error) {
-            response.status(404);
-            next(`Cannot PUT /fruits/${fruitId}`);
-        }
-    }
-);
-
 router.patch(
     "/fruits/:id",
-    validate({ body: fruitSchemaUpdate }),
+    validate({
+        body: fruitSchemaUpdate,
+    }),
     async (req, res) => {
         const fruitData: FruitDataUpdate = req.body;
         const fruitFound = await prisma.fruits.findUnique({
@@ -126,25 +92,15 @@ router.patch(
         const objToSave = {
             ...fruits,
             ...(nutrition && {
-                nutrition: {
-                    update: nutrition.map((nutritio) => {
-                        const { id } = nutritio;
-                        return {
-                            where: { id },
-                            data: {
-                                carbohydrates: nutritio.carbohydrates,
-                                protein: nutritio.protein,
-                                fath: nutritio.fath,
-                                calories: nutritio.calories,
-                                sugar: nutritio.sugar,
-                            },
-                        };
-                    }),
+                nutritions: {
+                    update: {
+                        where: { id: nutrition.id },
+                        data: nutrition,
+                    },
                 },
             }),
         };
-        //@ts-ignore
-        const fruitUpdate: fruitResponse = await prisma.fruits.update({
+        const fruitUpdate = await prisma.fruits.update({
             where: { id: fruitFound?.id },
             data: objToSave,
         });
@@ -154,7 +110,15 @@ router.patch(
 
 router.delete("/fruits/:id(\\d+)", async (request, response, next) => {
     const fruitId = Number(request.params.id);
+    console.log(fruitId);
     try {
+        const nutritionsData = await prisma.nutrition.findMany({
+            where: { fruitsId: fruitId },
+        });
+        console.log(nutritionsData);
+        await prisma.nutrition.deleteMany({
+            where: { id: nutritionsData[0].id, fruitsId: fruitId },
+        });
         await prisma.fruits.deleteMany({
             where: { id: fruitId },
         });

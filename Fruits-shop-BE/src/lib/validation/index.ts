@@ -1,14 +1,7 @@
-// import addFormats from "ajv-formats";
 import { Validator, ValidationError } from "express-json-validator-middleware";
 import { ErrorRequestHandler } from "express";
 
-const validator = new Validator({
-    coerceTypes: true,
-});
-
-// addFormats(validator.ajv, ["date-time"])
-//     .addKeyword("kind")
-//     .addKeyword("modifier");
+const validator = new Validator({});
 
 export const validate = validator.validate;
 
@@ -35,5 +28,3 @@ export const ValidationErrorMiddleware: ErrorRequestHandler = (
         next(error);
     }
 };
-
-export * from "./fruit";

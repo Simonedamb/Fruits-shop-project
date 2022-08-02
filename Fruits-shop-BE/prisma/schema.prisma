@@ -21,7 +21,7 @@ model Fruits {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    nutrition Nutrition[] @relation("FruitsHasNutrition")
+    nutrition Nutrition? @relation("FruitsHasNutrition")
 }
 
 model Nutrition {
@@ -35,5 +35,5 @@ model Nutrition {
     updatedAt     DateTime @updatedAt
 
     fruits   Fruits @relation("FruitsHasNutrition", fields: [fruitsId], references: [id])
-    fruitsId Int
+    fruitsId  Int   @unique
 }

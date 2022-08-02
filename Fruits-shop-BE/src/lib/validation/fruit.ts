@@ -1,6 +1,5 @@
 import { Static, Type } from "@sinclair/typebox";
 
-
 export const nutritionSchema = Type.Object(
     {
         carbohydrates: Type.Number(),
@@ -19,7 +18,7 @@ export const fruitSchema = Type.Object(
         price: Type.Number(),
         family: Type.Optional(Type.String()),
         order: Type.String(),
-        nutrition: Type.Optional(Type.Array(nutritionSchema)),
+        nutrition: Type.Optional(nutritionSchema),
     },
     { additionalProperties: false }
 );
@@ -43,43 +42,33 @@ export const fruitSchemaUpdate = Type.Object(
         price: Type.Optional(Type.Number()),
         family: Type.Optional(Type.String()),
         order: Type.Optional(Type.String()),
-        nutrition: Type.Optional(Type.Array(nutritionSchemaUpdate)),
+        nutrition: Type.Optional(nutritionSchemaUpdate),
     },
     { additionalProperties: false }
 );
 
+export type nutritionResponse = {
+    id: number;
+    carbohydrates: number;
+    protein: number;
+    fath: number;
+    calories: number;
+    sugar: number;
+};
 
-export type nutritionResponse={
-    id:number,
-    carbohydrates:number,
-    protein:number,
-    fath:number,
-    calories:number,
-    sugar:number
-}
-
-
-export type fruitResponse={
-    id:number,
-    name:string,
-    genus:string,
-    image:string,
-    price:string,
-    family:string,
-    order:string,
-    createdAt:Date,
-    updatedAt:Date,
-    nutrition?:nutritionResponse[]
-
-}
-
-
-
-
-
+export type fruitResponse = {
+    id: number;
+    name: string;
+    genus?: string | null;
+    image: string;
+    price: number;
+    family?: string | null;
+    order: string;
+    createdAt: Date;
+    updatedAt: Date;
+    nutrition?: nutritionResponse;
+};
 
 export type FruitData = Static<typeof fruitSchema>;
 export type FruitDataUpdate = Static<typeof fruitSchemaUpdate>;
 export type DetailsDataUpdate = Static<typeof nutritionSchemaUpdate>;
-
-
