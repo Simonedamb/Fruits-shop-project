@@ -8,16 +8,15 @@ import generalRouter from "./routes/index";
 import cors from "cors";
 
 const corsOptions = {
-    origin: "http://localhost:8080",
+    origin: "http://localhost:3001",
 };
 
 const port = process.env.PORT;
 
 const app = express();
+app.use(cors(corsOptions));
 
 app.use(express.json());
-
-app.use(cors(corsOptions));
 
 app.use(generalRouter);
 

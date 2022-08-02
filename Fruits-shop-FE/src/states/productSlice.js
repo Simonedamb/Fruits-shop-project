@@ -7,10 +7,11 @@ const initialState = {
   status: "idle",
 };
 
-export const fetchFruits = createAsyncThunk("products/getFruits", async () => {
+export const fetchFruits = createAsyncThunk("/fruits", async () => {
   try {
-    const call = await fetch(`https://fruits-develhope.herokuapp.com/api`);
+    const call = await fetch(`http://localhost:3000/fruits`);
     const response = await call.json();
+    console.log(response);
     return response;
   } catch (error) {
     throw error;
@@ -35,17 +36,6 @@ const storeState = createSlice({
         state.status = "failed";
         state.loading = false;
         state.error = "impossibile caricare i dati";
-      })
-      .addDefaultCase((state, action) => {
-        if (
-          action.type !== "cart/addItem" &&
-          action.type !== "cart/removeItem" &&
-          action.type !== "cart/decrementCart"
-        ) {
-          state.status = "idle";
-          state.loading = false;
-          state.fruits = initialState;
-        }
       });
   },
 });

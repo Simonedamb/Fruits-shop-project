@@ -18,7 +18,7 @@ const LandingPage = () => {
             <h1 className="text-amber-700 font-bold">
               LA MIGLIORE FRUTTA DIRETTAMENTE A CASA TUA!
             </h1>
-            <Link to="/home">
+            <Link to="/fruits">
               <button className="rounded-lg bg-orange-500 p-2 mt-3 text-white hover:bg-amber-700">
                 Visita lo store
               </button>

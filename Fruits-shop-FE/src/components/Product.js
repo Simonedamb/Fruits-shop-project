@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
 import PopUpFruits from "../components/PopUpFruits";
 import plus from "../assets/plus.svg";
@@ -17,6 +16,7 @@ import {
 
 const Product = () => {
   const allFruits = useSelector(allProducts);
+  console.log(allFruits);
   const statusFruits = useSelector(productStatus);
   const errorFruits = useSelector(errorProduct);
   const loadingFruits = useSelector(loadingProduct);
@@ -77,69 +77,71 @@ const Product = () => {
           </div>
         )}
 
-        {allFruits.fruits
-          .filter((fruit) => {
-            if (search === "") {
-              return fruit;
-            } else if (
-              fruit.name.toLowerCase().includes(search.toLowerCase())
-            ) {
-              return fruit;
-            }
-          })
+        {allFruits &&
+          allFruits
 
-          .map((fruit, index) => (
-            <div
-              key={index}
-              className="flex flex-col mx-auto justify-center items-center w-[250px] "
-            >
-              <div>
-                <h1 className="font-bold text-2xl">{fruit.name}</h1>
-              </div>
+            .filter((fruit) => {
+              if (search === "") {
+                return fruit;
+              } else if (
+                fruit.name.toLowerCase().includes(search.toLowerCase())
+              ) {
+                return fruit;
+              }
+            })
+
+            .map((fruit, index) => (
               <div
-                className="w-full h-[150px] bg-contain bg-center bg-no-repeat overflow-hidden"
-                style={{ backgroundImage: "url(" + fruit.image + ")" }}
-              ></div>
-              <div className="mt-4 flex items-center justify-center flex-wrap">
-                <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                  Carboidrati: {fruit.nutritions.carbohydrates}
-                </p>
-                <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                  Calorie: {fruit.nutritions.calories}
-                </p>
-                <p className=" text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                  Grassi: {fruit.nutritions.fat}%
-                </p>
-                <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                  Prezzo:{fruit.price}
-                </p>
+                key={index}
+                className="flex flex-col mx-auto justify-center items-center w-[250px] "
+              >
+                <div>
+                  <h1 className="font-bold text-2xl">{fruit.name}</h1>
+                </div>
+                <div
+                  className="w-full h-[150px] bg-contain bg-center bg-no-repeat overflow-hidden"
+                  style={{ backgroundImage: "url(" + fruit.image + ")" }}
+                ></div>
+                <div className="mt-4 flex items-center justify-center flex-wrap">
+                  <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
+                    Carboidrati: {fruit.nutrition.carbohydrates}
+                  </p>
+                  <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
+                    Calorie: {fruit.nutrition.calories}
+                  </p>
+                  <p className=" text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
+                    Grassi: {fruit.nutrition.fath}%
+                  </p>
+                  <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
+                    Prezzo:{fruit.price}
+                  </p>
+                </div>
+                <div className=" flex items-center justify-between   flex-wrap mt-5">
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        addItem({
+                          ...fruit,
+                          cartId: nanoid(),
+                        })
+                      )
+                    }
+                    className=" bg-lime-500 rounded-lg p-2 m-3 text-white"
+                  >
+                    Acquista
+                  </button>
+                  <button
+                    onClick={() => {
+                      setPopUpData(fruit);
+                      handlePopUp();
+                    }}
+                    className="bg-orange-400 rounded-lg p-2 m-3 text-white"
+                  >
+                    Dettagli
+                  </button>
+                </div>
               </div>
-              <div className=" flex items-center justify-between   flex-wrap mt-5">
-                <button
-                  onClick={() =>
-                    dispatch(
-                      addItem({
-                        ...fruit,
-                        cartId: nanoid(),
-                      })
-                    )
-                  }
-                  className=" bg-lime-500 rounded-lg p-2 m-3 text-white"
-                >
-                  Acquista
-                </button>
-                <button
-                  onClick={() => {
-                    setPopUpData(fruit);
-                    handlePopUp();
-                  }}
-                  className="bg-orange-400 rounded-lg p-2 m-3 text-white"
-                >
-                  Dettagli
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
         {popUp && <PopUpFruits fruit={popUpData} state={setPopUp} />}
       </div>
     </>
