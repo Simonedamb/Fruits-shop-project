@@ -7,6 +7,7 @@ function NewFruit({ newFruitForm, handleCloseFruitForm, data }) {
   // console.log(formState);
   const dispatch = useDispatch();
 
+  const sc = {};
   const handleNewFruit = (e) => {
     e.preventDefault();
     fetch("http://localhost:3000/fruits", {
