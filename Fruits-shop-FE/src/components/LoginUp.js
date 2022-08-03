@@ -4,12 +4,13 @@ import LockIcon from "@mui/icons-material/Lock";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 
-export const LoginUp = () => {
+export const LoginUp = ({controlsAdmin}) => {
   const [data, setData] = useState({});
   const [user, setUser] = useState({});
 
   const handleControl = () => {
     if (data === user) {
+      controlsAdmin()
     }
   };
 
@@ -89,7 +90,7 @@ export const LoginUp = () => {
                   </div>
                   <div className="text-center pt-4">
                     <button
-                      onClick={(e) => handleAdmin(e)}
+                      onClick={()=>{(e) => handleAdmin(e);()=>handleControl } }
                       className=" w-[50%] border rounded-[10px] bg-green-600 p-2 hover:bg-white"
                     >
                       ACCEDI

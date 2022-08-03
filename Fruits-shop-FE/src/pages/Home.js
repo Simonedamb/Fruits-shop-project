@@ -4,11 +4,11 @@ import Product from "../components/Product";
 
 import Footer from "../components/Footer";
 
-const Home = ({ adminControl }) => {
+const Home = ({ adminControl ,controlsAdmin }) => {
   return (
     <div>
-      <Navbar adminControl={adminControl} />
-      <Product adminControl={adminControl} />
+      <Navbar adminControl={adminControl} controlsAdmin={controlsAdmin} />
+      <Product adminControl={adminControl} controlsAdmin={controlsAdmin} />
       <Footer />
     </div>
   );

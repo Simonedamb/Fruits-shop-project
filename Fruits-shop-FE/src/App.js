@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route
             path="/fruits"
-            element={<Home adminControl={adminControl} />}
+            element={<Home adminControl={adminControl} controlsAdmin={controlsAdmin} />}
           />
         </Routes>
       </Router>

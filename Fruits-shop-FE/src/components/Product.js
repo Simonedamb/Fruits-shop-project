@@ -14,7 +14,7 @@ import {
   fetchFruits,
 } from "../states/productSlice";
 
-const Product = ({ adminControl }) => {
+const Product = ({ adminControl,controlsAdmin }) => {
   const allFruits = useSelector(allProducts);
   const statusFruits = useSelector(productStatus);
   const errorFruits = useSelector(errorProduct);

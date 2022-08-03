@@ -10,7 +10,7 @@ import { SignUp } from "./SignUp";
 import { LoginUp } from "./LoginUp";
 import Profile from "./Profile";
 
-const Navbar = ({ adminControl }) => {
+const Navbar = ({ adminControl,controlsAdmin }) => {
   const [signUp, setSignUp] = useState(false);
   const [loginUp, setLoginUp] = useState(false);
   const { amount } = useSelector((state) => state.cart);
@@ -68,7 +68,7 @@ const Navbar = ({ adminControl }) => {
       </div>
       {showCart && <PopUpCart cart={setShowCart} />}
       {signUp && <SignUp login={setSignUp} />}
-      {loginUp && <LoginUp login={setLoginUp} />}
+      {loginUp && <LoginUp login={setLoginUp} controlsAdmin={controlsAdmin}/>}
     </div>
   );
 };
