@@ -37,3 +37,9 @@ model Nutrition {
     fruits   Fruits @relation("FruitsHasNutrition", fields: [fruitsId], references: [id])
     fruitsId  Int   @unique
 }
+
+model Admin {
+id          Int         @id @default(autoincrement())
+name        String      @db.VarChar(255)
+password    String      @db.VarChar(255)
+}

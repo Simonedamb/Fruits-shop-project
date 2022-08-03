@@ -14,7 +14,7 @@ import {
   fetchFruits,
 } from "../states/productSlice";
 
-const Product = () => {
+const Product = ({ adminControl }) => {
   const allFruits = useSelector(allProducts);
   const statusFruits = useSelector(productStatus);
   const errorFruits = useSelector(errorProduct);
@@ -49,21 +49,23 @@ const Product = () => {
         ></input>
       </div>
       <div className=" bg-slate-200 w-full h-16 flex justify-start pl-6 pt-2">
-        <button
-          onClick={
-            newFruitForm === false
-              ? () => handleOpenFruitForm()
-              : () => handleCloseFruitForm()
-          }
-          className="w-[45px] h-[45px]"
-        >
-          <img
-            className="w-[50px] h-[50px]"
-            src={newFruitForm ? closeRed : plus}
-          />
-        </button>
+        {adminControl ? (
+          <button
+            onClick={
+              newFruitForm === false
+                ? () => handleOpenFruitForm()
+                : () => handleCloseFruitForm()
+            }
+            className="w-[45px] h-[45px]"
+          >
+            <img
+              className="w-[50px] h-[50px]"
+              src={newFruitForm ? closeRed : plus}
+            />
+          </button>
+        ) : null}
       </div>
-      {newFruitForm ? (
+      {adminControl && newFruitForm ? (
         <NewFruit
           data={allFruits}
           newFruitForm={newFruitForm}

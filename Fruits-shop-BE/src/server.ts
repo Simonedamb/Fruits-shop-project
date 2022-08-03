@@ -4,6 +4,7 @@ import "dotenv/config";
 import { ValidationErrorMiddleware } from "./lib/validation";
 
 import generalRouter from "./routes/index";
+import routerAdmin from "./routes/admin";
 
 import cors from "cors";
 
@@ -19,6 +20,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(generalRouter);
+
+app.use(routerAdmin);
 
 app.use(ValidationErrorMiddleware);
 

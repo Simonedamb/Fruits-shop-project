@@ -10,7 +10,7 @@ import { SignUp } from "./SignUp";
 import { LoginUp } from "./LoginUp";
 import Profile from "./Profile";
 
-const Navbar = () => {
+const Navbar = ({ adminControl }) => {
   const [signUp, setSignUp] = useState(false);
   const [loginUp, setLoginUp] = useState(false);
   const { amount } = useSelector((state) => state.cart);

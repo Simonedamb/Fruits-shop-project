@@ -46,6 +46,11 @@ export const fruitSchemaUpdate = Type.Object(
     { additionalProperties: false }
 );
 
+export const adminSchema = Type.Object({
+    name: Type.String(),
+    pasword: Type.String(),
+});
+
 export type nutritionResponse = {
     id: number;
     carbohydrates: number;
@@ -66,6 +71,11 @@ export type fruitResponse = {
     createdAt: Date;
     updatedAt: Date;
     nutrition?: nutritionResponse;
+};
+
+export type adminResponse = {
+    name: string;
+    password: string;
 };
 
 export type FruitData = Static<typeof fruitSchema>;
