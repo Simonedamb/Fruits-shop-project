@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchFruits = createAsyncThunk("/fruits", async () => {
   try {
-    const call = await fetch(`http://localhost:3002/fruits`);
+    const call = await fetch(`http://localhost:3000/fruits`);
     const response = await call.json();
     return response;
   } catch (error) {

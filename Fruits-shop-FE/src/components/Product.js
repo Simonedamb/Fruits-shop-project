@@ -65,6 +65,7 @@ const Product = () => {
       </div>
       {newFruitForm ? (
         <NewFruit
+          data={allFruits}
           newFruitForm={newFruitForm}
           handleCloseFruitForm={handleCloseFruitForm}
         />
@@ -103,13 +104,13 @@ const Product = () => {
                 ></div>
                 <div className="mt-4 flex items-center justify-center flex-wrap">
                   <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                    Carboidrati: {fruit.nutrition.carbohydrates}
+                    Carboidrati: {fruit.nutrition?.carbohydrates}
                   </p>
                   <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                    Calorie: {fruit.nutrition.calories}
+                    Calorie: {fruit.nutrition?.calories}
                   </p>
                   <p className=" text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
-                    Grassi: {fruit.nutrition.fath}%
+                    Grassi: {fruit.nutrition?.fath}%
                   </p>
                   <p className="text-sm mb-3 mx-2 bg-slate-300 p-1 rounded-md mr-2">
                     Prezzo:{fruit.price}

@@ -35,7 +35,6 @@ export const nutritionSchemaUpdate = Type.Object(
 );
 export const fruitSchemaUpdate = Type.Object(
     {
-        id: Type.Integer(),
         name: Type.Optional(Type.String()),
         genus: Type.Optional(Type.String()),
         image: Type.Optional(Type.String()),

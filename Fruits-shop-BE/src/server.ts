@@ -8,7 +8,7 @@ import generalRouter from "./routes/index";
 import cors from "cors";
 
 const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
 };
 
 const port = process.env.PORT;

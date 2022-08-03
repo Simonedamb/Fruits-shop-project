@@ -46,12 +46,9 @@ router.get("/fruits/:id(\\d+)", async (req, res, next) => {
 
 router.post(
     "/fruits",
-    validate({ body: fruitSchema }),
+    // validate({ body: fruitSchema }),
     async (req, res, err) => {
         const fruitData: FruitData = req.body;
-        if (res.status(400)) {
-            console.log(err);
-        }
 
         const { nutrition, ...fruits } = fruitData;
 
@@ -59,16 +56,17 @@ router.post(
             ...fruits,
             ...(nutrition && {
                 nutrition: {
-                    create: nutrition,
+                    create: { ...nutrition },
                 },
             }),
         };
         console.log(objToSave);
         // @ts-ignore
         const newFruit: fruitResponse = await prisma.fruits.create({
-            data: objToSave,
+            data: { ...objToSave },
         });
-        res.status(201).json(newFruit);
+        console.log(newFruit);
+        res.status(201).send(newFruit);
     }
 );
 

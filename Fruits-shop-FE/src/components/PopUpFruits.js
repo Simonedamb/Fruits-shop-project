@@ -51,9 +51,9 @@ const PopUpFruits = ({ fruit, state }) => {
               Contiene i seguenti valori nutrizionali:
             </p>
             <ul className="text-white">
-              <li>Zuccheri: {fruit.nutrition.sugar}</li>
-              <li>Grassi: {fruit.nutrition.fath}</li>
-              <li>Proteine: {fruit.nutrition.protein}</li>
+              <li>Zuccheri: {fruit.nutrition?.sugar}</li>
+              <li>Grassi: {fruit.nutrition?.fath}</li>
+              <li>Proteine: {fruit.nutrition?.protein}</li>
             </ul>
             <button
               className="bg-orange-500 rounded-lg p-3 mt-4 text-white font-bold text-xl"
@@ -64,7 +64,7 @@ const PopUpFruits = ({ fruit, state }) => {
           </div>
         </div>
       )}
-      {modifyUp && <ModifyUp fruit={fruit} handleClose={handleClosePopUp} />}
+      {modifyUp && <ModifyUp data={fruit} handleClose={handleClosePopUp} />}
       {deleteFruit && (
         <DeleteFruit fruit={fruit} handleClose={handleClosePopUp} />
       )}
