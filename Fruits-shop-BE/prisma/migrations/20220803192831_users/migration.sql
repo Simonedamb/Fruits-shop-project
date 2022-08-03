@@ -28,6 +28,15 @@ CREATE TABLE "Nutrition" (
     CONSTRAINT "Nutrition_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Users" (
+    "id" SERIAL NOT NULL,
+    "username" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Nutrition_fruitsId_key" ON "Nutrition"("fruitsId");
 

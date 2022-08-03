@@ -2,8 +2,22 @@ import * as React from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { loginUser } from "../states/loginSlice";
 
-export const LoginUp = () => {
+export const LoginUp = ({ login }) => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    username: null,
+    password: null,
+  });
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(formData));
+  };
+
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-screen backdrop-brightness-[.2]">
       <div className="font-sans">
@@ -12,10 +26,16 @@ export const LoginUp = () => {
             <div className="w-full relative">
               <div className="mt-6">
                 <div className="mb-5 pb-1border-b-2 text-center font-base text-gray-700"></div>
-                <form className="container w-full max-w-xl p-8 mx-auto space-y-6 rounded-md shadow bg-zinc-300 ng-untouched ng-pristine ng-valid">
+                <form
+                  onSubmit={handleLogin}
+                  className="container w-full max-w-xl p-8 mx-auto space-y-6 rounded-md shadow bg-zinc-300 ng-untouched ng-pristine ng-valid"
+                >
                   <div className="mx-auto max-w-lg">
                     <div className="text-end">
-                      <button className="text-[15px] hover:text-red-700">
+                      <button
+                        onClick={() => login(false)}
+                        className="text-[15px] hover:text-red-700"
+                      >
                         <CloseIcon />
                       </button>
                     </div>
@@ -26,6 +46,12 @@ export const LoginUp = () => {
                         Username
                       </span>
                       <input
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            username: e.target.value,
+                          })
+                        }
                         placeholder="Scrivi il tuo username"
                         type="text"
                         className="text-md block px-3 py-2  rounded-lg w-full
@@ -39,6 +65,12 @@ export const LoginUp = () => {
                       </span>
                       <div className="relative">
                         <input
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              password: e.target.value,
+                            })
+                          }
                           placeholder="scrivi la tua password"
                           type="password"
                           className="text-md block px-3 py-2 rounded-lg w-full
@@ -58,7 +90,10 @@ export const LoginUp = () => {
                     </span>
                   </div>
                   <div className="text-center pt-4">
-                    <button className=" w-[50%] border rounded-[10px] bg-green-600 p-2 hover:bg-white">
+                    <button
+                      type="submit"
+                      className=" w-[50%] border rounded-[10px] bg-green-600 p-2 hover:bg-white"
+                    >
                       ACCEDI
                     </button>
                   </div>

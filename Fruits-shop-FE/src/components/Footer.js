@@ -15,7 +15,7 @@ const Footer = () => {
       <footer className="p-4 bg-green-500">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="*" className="flex items-center">
+            <div className="flex items-center">
               <img
                 src={FooterLogo}
                 className="mr-3 h-[75px]"
@@ -24,7 +24,7 @@ const Footer = () => {
               <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
                 Fruit Store
               </span>
-            </a>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>

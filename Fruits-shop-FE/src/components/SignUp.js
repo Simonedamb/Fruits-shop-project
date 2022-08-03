@@ -1,24 +1,19 @@
 import * as React from "react";
-import { addUser } from "../states/signUpSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../states/registerSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export const SignUp = ({ login }) => {
-  const array = useSelector((state) => state.user.users);
+  const [form, setForm] = useState({
+    username: null,
+    password: null,
+  });
+  console.log(form);
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userName = event.target.userName;
-    const userPassword = event.target.userPassword;
-    const userEmail = event.target.userEmail;
 
-    dispatch(
-      addUser({
-        name: userName.value,
-        password: userPassword.value,
-        email: userEmail.value,
-        registrationDate: new Date().toLocaleDateString(),
-      })
-    );
+    dispatch(registerUser(form));
 
     event.target.reset();
     login(false);
@@ -39,7 +34,12 @@ export const SignUp = ({ login }) => {
               Nome
             </label>
             <input
-              onChange={() => "BENVENUTI"}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  username: e.target.value,
+                })
+              }
               name="userName"
               id="name"
               type="text"
@@ -53,6 +53,12 @@ export const SignUp = ({ login }) => {
               Password
             </label>
             <input
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  password: e.target.value,
+                })
+              }
               name="userPassword"
               id="password"
               type="password"
@@ -60,18 +66,6 @@ export const SignUp = ({ login }) => {
               required=""
               className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-green-700  "
             />
-          </div>
-          <div>
-            <label htmlFor="message" className="block mb-1 ml-1">
-              Email
-            </label>
-            <input
-              name="userEmail"
-              id="message"
-              type="email"
-              placeholder="scrivi la tua email"
-              className="block w-full p-2 rounded focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-green-700 "
-            ></input>
           </div>
           <div className="flex justify-around">
             <button
