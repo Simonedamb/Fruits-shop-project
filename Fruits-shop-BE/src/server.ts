@@ -3,19 +3,13 @@ import "express-async-errors";
 import "dotenv/config";
 import config from "./config";
 import { ValidationErrorMiddleware } from "./lib/validation";
-
+import { initCorsMiddleware } from "./lib/middleware/cors";
 import generalRouter from "./routes/index";
-
-import cors from "cors";
-
-const corsOptions = {
-    origin: "http://localhost:3001",
-};
 
 const port = config.PORT
 
 const app = express();
-app.use(cors(corsOptions));
+app.use(initCorsMiddleware);
 
 app.use(express.json());
 
