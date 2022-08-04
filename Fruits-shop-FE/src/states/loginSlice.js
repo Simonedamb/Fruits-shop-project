@@ -6,7 +6,7 @@ const initialState = {
   loginError: "",
 };
 
-export const loginUser = createAsyncThunk("login/loginUser", async (data) => {
+export const loginUser = createAsyncThunk("fruits/login", async (data) => {
   try {
     return await fetch(`http://localhost:3000/login`, {
       method: "POST",
