@@ -6,17 +6,19 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { loginUser } from "../states/loginSlice";
 
-export const LoginUp = ({ login }) => {
+export const LoginUp = ({ login,setUser }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: null,
     password: null,
   });
 
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData));
   };
+
 
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-screen backdrop-brightness-[.2]">
@@ -90,7 +92,7 @@ export const LoginUp = ({ login }) => {
                     </span>
                   </div>
                   <div className="text-center pt-4">
-                    <button
+                    <button onClick={()=>{setUser(formData.username);() => login(false);}}
                       type="submit"
                       className=" w-[50%] border rounded-[10px] bg-green-600 p-2 hover:bg-white"
                     >

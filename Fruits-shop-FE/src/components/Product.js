@@ -14,7 +14,7 @@ import {
   fetchFruits,
 } from "../states/productSlice";
 
-const Product = () => {
+const Product = ({user, setUser}) => {
   const allFruits = useSelector(allProducts);
   const statusFruits = useSelector(productStatus);
   const errorFruits = useSelector(errorProduct);
@@ -48,7 +48,7 @@ const Product = () => {
           placeholder="Cerca il tuo frutto..."
         ></input>
       </div>
-      <div className=" bg-slate-200 w-full h-16 flex justify-start pl-6 pt-2">
+     {user!==null?<div className=" bg-slate-200 w-full h-16 flex justify-start pl-6 pt-2">
         <button
           onClick={
             newFruitForm === false
@@ -62,8 +62,8 @@ const Product = () => {
             src={newFruitForm ? closeRed : plus}
           />
         </button>
-      </div>
-      {newFruitForm ? (
+      </div>:null}
+      {user!==null && newFruitForm ? (
         <NewFruit
           data={allFruits}
           newFruitForm={newFruitForm}

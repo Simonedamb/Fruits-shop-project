@@ -10,13 +10,13 @@ import { SignUp } from "./SignUp";
 import { LoginUp } from "./LoginUp";
 import Profile from "./Profile";
 
-const Navbar = () => {
+const Navbar = ({user, setUser}) => {
   const [signUp, setSignUp] = useState(false);
   const [loginUp, setLoginUp] = useState(false);
   const { amount } = useSelector((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
   const myUser = useSelector((state) => state.user.users);
-  // console.log(myUser);
+   console.log(user);
 
   const handleOpenCart = () => {
     setShowCart(!showCart);
@@ -47,7 +47,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="items-center text-center">
+          {user===null?<div className="items-center text-center">
             <button
               hidden={myUser.length >= 1 && <Profile />}
               onClick={() => setSignUp(true)}
@@ -63,12 +63,13 @@ const Navbar = () => {
               Login
             </button>
             {myUser.length >= 1 && <Profile />}
-          </div>
+          </div>:<Profile user={user} setUser={setUser}/>}
         </div>
       </div>
       {showCart && <PopUpCart cart={setShowCart} />}
-      {signUp && <SignUp login={setSignUp} />}
-      {loginUp && <LoginUp login={setLoginUp} />}
+      {user===null && signUp ?  <SignUp login={setSignUp} setUser={setUser} />:null}
+      {user===null && loginUp  ?   <LoginUp login={setLoginUp} setUser={setUser} />:null}
+      {user!==null? <h1>{user.username}</h1>:null}
     </div>
   );
 };

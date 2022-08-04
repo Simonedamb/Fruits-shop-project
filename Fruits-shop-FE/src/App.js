@@ -9,7 +9,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/fruits" element={<Home />} />
-        </Routes>
+agf        </Routes>
       </Router>
     </div>
   );
